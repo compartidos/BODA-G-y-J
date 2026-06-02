@@ -10,18 +10,8 @@
   :root { --cream: #faf6f0; --gold: #c9a96e; --dark: #2c2420; --muted: #8a7968; }
   body { background: var(--cream); color: var(--dark); font-family: 'Jost', sans-serif; font-weight: 300; }
 
-  /* HERO — una sola foto fullscreen */
-  .hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-  }
-  .hero img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    filter: brightness(0.75);
-  }
+  .hero { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75); }
   .hero-overlay {
     position: absolute; inset: 0;
     display: flex; flex-direction: column;
@@ -50,16 +40,12 @@
     margin-top: 10px; letter-spacing: 0.02em;
   }
 
-  /* UPLOAD */
   .upload-section { max-width: 600px; margin: 56px auto 48px; padding: 0 20px; text-align: center; }
   .section-label { font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: block; }
   .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.7rem, 7vw, 2.4rem); font-weight: 300; line-height: 1.3; margin-bottom: 14px; }
   .section-text { color: var(--muted); font-size: 0.88rem; line-height: 1.9; margin-bottom: 28px; }
 
-  /* Botón de subir — grande, fácil de tocar en móvil */
-  .upload-btn-area {
-    display: flex; flex-direction: column; align-items: center; gap: 14px;
-  }
+  .upload-btn-area { display: flex; flex-direction: column; align-items: center; gap: 14px; }
   .upload-label {
     display: flex; align-items: center; justify-content: center; gap: 12px;
     width: 100%; max-width: 340px;
@@ -95,33 +81,20 @@
   .btn-subir:active { opacity: 0.8; }
   .btn-subir:disabled { background: #bbb; cursor: not-allowed; }
 
-  /* DIVIDER */
   .divider { display: flex; align-items: center; gap: 16px; max-width: 340px; margin: 0 auto 44px; }
   .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.35; }
   .divider span { color: var(--gold); font-size: 1rem; }
 
-  /* GALLERY — collage 3 columnas */
   .gallery-section { max-width: 1000px; margin: 0 auto 80px; padding: 0 12px; }
   .gallery-section .section-label, .gallery-section .section-title { text-align: center; }
   .gallery-section .section-title { font-size: clamp(1.3rem, 5vw, 1.9rem); margin-bottom: 24px; }
 
-  .collage {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-  }
+  .collage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
   .collage-item { aspect-ratio: 1; overflow: hidden; cursor: pointer; }
-  .collage-item img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-    display: block;
-  }
+  .collage-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
   .collage-item:active img { transform: scale(1.05); }
-
   .empty-gallery { text-align: center; color: var(--muted); font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; padding: 50px 0; grid-column: 1/-1; }
 
-  /* LIGHTBOX */
   .lightbox { display: none; position: fixed; inset: 0; background: rgba(44,36,32,0.97); z-index: 1000; align-items: center; justify-content: center; }
   .lightbox.open { display: flex; }
   .lightbox img { max-width: 95vw; max-height: 88vh; object-fit: contain; border-radius: 2px; }
@@ -130,7 +103,6 @@
 </head>
 <body>
 
-<!-- HERO — 1 foto de portada -->
 <section class="hero">
   <!-- ✏️ REEMPLAZÁ esta URL con tu foto cuando la tengas -->
   <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=85" alt="Nuestra boda">
@@ -143,8 +115,7 @@
   </div>
 </section>
 
-<!-- SUBIR FOTOS -->
-<section class="upload-section">
+<section class="upload-section" id="uploadSection">
   <span class="section-label">Galería compartida</span>
   <h2 class="section-title">Compartí tus<br><em>momentos</em></h2>
   <p class="section-text">Subí tus fotos favoritas y formá parte de este álbum que guardaremos para siempre.</p>
@@ -168,7 +139,6 @@
 
 <div class="divider"><span>✦</span></div>
 
-<!-- GALERÍA COLLAGE -->
 <section class="gallery-section">
   <span class="section-label">Momentos capturados</span>
   <h2 class="section-title">El álbum de todos</h2>
@@ -177,7 +147,6 @@
   </div>
 </section>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <span class="lightbox-close" onclick="closeLightbox()">✕</span>
   <img id="lightboxImg" src="" alt="">
@@ -329,6 +298,23 @@
   document.getElementById('lightbox').addEventListener('click', function(e) {
     if (e.target === this) closeLightbox();
   });
+
+  // ── Control de horario ──
+  function verificarAcceso() {
+    const ahora = new Date();
+    const cierre = new Date('2026-09-12T03:00:00');
+    if (ahora > cierre) {
+      document.getElementById('uploadSection').innerHTML = `
+        <span class="section-label">Galería cerrada</span>
+        <h2 class="section-title">¡Gracias por<br><em>compartir!</em></h2>
+        <p class="section-text">
+          La galería de subida ya está cerrada.<br>
+          Podés seguir viendo todas las fotos abajo. 💛
+        </p>
+      `;
+    }
+  }
+  verificarAcceso();
 
   cargarGaleria();
 </script>
