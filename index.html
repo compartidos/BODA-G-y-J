@@ -40,6 +40,30 @@
     margin-top: 10px; letter-spacing: 0.02em;
   }
 
+  /* PÁGINA DE CIERRE */
+  .cierre-page {
+    min-height: 60vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 60px 24px;
+  }
+  .cierre-page .section-label {
+    font-size: 0.68rem; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 20px; display: block;
+  }
+  .cierre-page .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 8vw, 3rem);
+    font-weight: 300; line-height: 1.3; margin-bottom: 20px;
+  }
+  .cierre-page .section-text {
+    color: var(--muted); font-size: 0.92rem;
+    line-height: 1.9; max-width: 340px;
+  }
+  .cierre-icon { font-size: 3rem; margin-bottom: 20px; }
+
+  /* UPLOAD */
   .upload-section { max-width: 600px; margin: 56px auto 48px; padding: 0 20px; text-align: center; }
   .section-label { font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: block; }
   .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.7rem, 7vw, 2.4rem); font-weight: 300; line-height: 1.3; margin-bottom: 14px; }
@@ -48,8 +72,7 @@
   .upload-btn-area { display: flex; flex-direction: column; align-items: center; gap: 14px; }
   .upload-label {
     display: flex; align-items: center; justify-content: center; gap: 12px;
-    width: 100%; max-width: 340px;
-    padding: 18px 30px;
+    width: 100%; max-width: 340px; padding: 18px 30px;
     background: var(--dark); color: var(--cream);
     font-family: 'Jost', sans-serif; font-size: 0.82rem;
     letter-spacing: 0.22em; text-transform: uppercase;
@@ -61,7 +84,7 @@
   .upload-label .cam-icon { font-size: 1.3rem; }
   #fileInput { display: none; }
 
-  .preview-strip { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 4px; }
+  .preview-strip { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
   .preview-strip img { width: 72px; height: 72px; object-fit: cover; border-radius: 4px; }
 
   .progress-wrap { width: 100%; max-width: 340px; margin: 0 auto; }
@@ -70,8 +93,8 @@
   .progress-msg { font-size: 0.82rem; color: var(--muted); min-height: 20px; text-align: center; }
 
   .btn-subir {
-    width: 100%; max-width: 340px;
-    padding: 16px; background: var(--gold); color: white;
+    width: 100%; max-width: 340px; padding: 16px;
+    background: var(--gold); color: white;
     font-family: 'Jost', sans-serif; font-size: 0.82rem;
     letter-spacing: 0.22em; text-transform: uppercase;
     border: none; border-radius: 3px; cursor: pointer;
@@ -98,7 +121,7 @@
   .lightbox { display: none; position: fixed; inset: 0; background: rgba(44,36,32,0.97); z-index: 1000; align-items: center; justify-content: center; }
   .lightbox.open { display: flex; }
   .lightbox img { max-width: 95vw; max-height: 88vh; object-fit: contain; border-radius: 2px; }
-  .lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 2rem; cursor: pointer; font-family: 'Cormorant Garamond', serif; padding: 8px; }
+  .lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 2rem; cursor: pointer; padding: 8px; }
 </style>
 </head>
 <body>
@@ -108,44 +131,15 @@
   <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=85" alt="Nuestra boda">
   <div class="hero-overlay">
     <div class="names">
-      Gilda <span class="ampersand">&</span> Julio
-      <span class="date">11 · Septiembre · 2026 </span>
+      María <span class="ampersand">&</span> Santiago
+      <span class="date">11 · Septiembre · 2026 — Asunción, Paraguay</span>
     </div>
     <p class="caption">Un día para recordar siempre</p>
   </div>
 </section>
 
-<section class="upload-section" id="uploadSection">
-  <span class="section-label">Galería compartida</span>
-  <h2 class="section-title">Compartí tus<br><em>momentos</em></h2>
-  <p class="section-text">Subí tus fotos favoritas y formá parte de este álbum que guardaremos para siempre.</p>
-
-  <div class="upload-btn-area">
-    <input type="file" id="fileInput" accept="image/*" multiple>
-    <label class="upload-label" for="fileInput">
-      <span class="cam-icon">📷</span>
-      Seleccionar fotos
-    </label>
-    <div class="preview-strip" id="previewStrip"></div>
-    <div class="progress-wrap">
-      <div class="progress-bar-bg" id="progressBg">
-        <div class="progress-bar-fill" id="progressFill"></div>
-      </div>
-      <div class="progress-msg" id="progressMsg"></div>
-    </div>
-    <button class="btn-subir" id="uploadBtn" onclick="uploadAll()">Subir fotos ✦</button>
-  </div>
-</section>
-
-<div class="divider"><span>✦</span></div>
-
-<section class="gallery-section">
-  <span class="section-label">Momentos capturados</span>
-  <h2 class="section-title">El álbum de todos</h2>
-  <div class="collage" id="gallery">
-    <div class="empty-gallery">Cargando fotos...</div>
-  </div>
-</section>
+<!-- Contenido dinámico según horario -->
+<div id="contenido"></div>
 
 <div class="lightbox" id="lightbox">
   <span class="lightbox-close" onclick="closeLightbox()">✕</span>
@@ -158,9 +152,61 @@
   const BIN_ID      = '6a1f27a0da38895dfe7d44df';
   const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-  let selectedFiles = [];
+  const CIERRE = new Date('2026-09-12T03:00:00');
+  const abierto = new Date() <= CIERRE;
 
-  document.getElementById('fileInput').addEventListener('change', e => handleFiles(e.target.files));
+  // ── Renderizar página según horario ──
+  if (!abierto) {
+    // CERRADO — solo mensaje, sin fotos
+    document.getElementById('contenido').innerHTML = `
+      <div class="cierre-page">
+        <span class="cierre-icon">🌙</span>
+        <span class="section-label">Galería cerrada</span>
+        <h2 class="section-title">¡Gracias por<br><em>acompañarnos!</em></h2>
+        <p class="section-text">
+          La galería ya no está disponible.<br>
+          Fue un honor compartir este día con vos.
+        </p>
+      </div>
+    `;
+  } else {
+    // ABIERTO — mostrar upload + galería
+    document.getElementById('contenido').innerHTML = `
+      <section class="upload-section" id="uploadSection">
+        <span class="section-label">Galería compartida</span>
+        <h2 class="section-title">Compartí tus<br><em>momentos</em></h2>
+        <p class="section-text">Subí tus fotos favoritas y formá parte de este álbum que guardaremos para siempre.</p>
+        <div class="upload-btn-area">
+          <input type="file" id="fileInput" accept="image/*" multiple>
+          <label class="upload-label" for="fileInput">
+            <span class="cam-icon">📷</span>
+            Seleccionar fotos
+          </label>
+          <div class="preview-strip" id="previewStrip"></div>
+          <div class="progress-wrap">
+            <div class="progress-bar-bg" id="progressBg">
+              <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-msg" id="progressMsg"></div>
+          </div>
+          <button class="btn-subir" id="uploadBtn" onclick="uploadAll()">Subir fotos ✦</button>
+        </div>
+      </section>
+      <div class="divider"><span>✦</span></div>
+      <section class="gallery-section">
+        <span class="section-label">Momentos capturados</span>
+        <h2 class="section-title">El álbum de todos</h2>
+        <div class="collage" id="gallery">
+          <div class="empty-gallery">Cargando fotos...</div>
+        </div>
+      </section>
+    `;
+
+    document.getElementById('fileInput').addEventListener('change', e => handleFiles(e.target.files));
+    cargarGaleria();
+  }
+
+  let selectedFiles = [];
 
   function handleFiles(files) {
     selectedFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
@@ -219,7 +265,6 @@
     }
 
     fill.style.width = '100%';
-
     if (nuevas.length) {
       msg.textContent = 'Guardando en la galería...';
       await agregarFotosAlBin(nuevas);
@@ -252,9 +297,7 @@
 
   async function agregarFotosAlBin(nuevas) {
     try {
-      const res = await fetch(JSONBIN_URL, {
-        headers: { 'X-Master-Key': JSONBIN_KEY }
-      });
+      const res = await fetch(JSONBIN_URL, { headers: { 'X-Master-Key': JSONBIN_KEY } });
       const data = await res.json();
       const actuales = data.record?.fotos || [];
       await fetch(JSONBIN_URL, {
@@ -267,10 +310,9 @@
 
   async function cargarGaleria() {
     const gallery = document.getElementById('gallery');
+    if (!gallery) return;
     try {
-      const res = await fetch(JSONBIN_URL, {
-        headers: { 'X-Master-Key': JSONBIN_KEY }
-      });
+      const res = await fetch(JSONBIN_URL, { headers: { 'X-Master-Key': JSONBIN_KEY } });
       const data = await res.json();
       const fotos = data.record?.fotos || [];
       if (!fotos.length) {
@@ -298,25 +340,6 @@
   document.getElementById('lightbox').addEventListener('click', function(e) {
     if (e.target === this) closeLightbox();
   });
-
-  // ── Control de horario ──
-  function verificarAcceso() {
-    const ahora = new Date();
-    const cierre = new Date('2026-09-12T03:00:00');
-    if (ahora > cierre) {
-      document.getElementById('uploadSection').innerHTML = `
-        <span class="section-label">Galería cerrada</span>
-        <h2 class="section-title">¡Gracias por<br><em>compartir!</em></h2>
-        <p class="section-text">
-          La galería de subida ya está cerrada.<br>
-          Podés seguir viendo todas las fotos abajo. 💛
-        </p>
-      `;
-    }
-  }
-  verificarAcceso();
-
-  cargarGaleria();
 </script>
 </body>
 </html>
