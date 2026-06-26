@@ -7,224 +7,170 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --cream: #faf6f0; --gold: #c9a96e; --dark: #2c2420; --muted: #8a7968; }
+  :root {
+    --cream: #faf6f0; --gold: #c9a96e; --dark: #2c2420; --muted: #8a7968;
+  }
   body { background: var(--cream); color: var(--dark); font-family: 'Jost', sans-serif; font-weight: 300; }
 
-  .hero { position: relative; width: 100%; height: 100vh; overflow: hidden; }
-  .hero img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75); }
-  .hero-overlay {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center; padding: 24px;
-    background: linear-gradient(to bottom, rgba(44,36,32,0.15) 0%, rgba(44,36,32,0.5) 100%);
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; position: relative; }
+  .hero-photo { position: relative; overflow: hidden; }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; filter: sepia(20%) brightness(0.9); transition: transform 8s ease; }
+  .hero-photo:hover img { transform: scale(1.04); }
+  .hero-photo .caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(44,36,32,0.7));
+    color: white; padding: 40px 30px 30px;
+    font-style: italic; font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; letter-spacing: 0.03em;
   }
-  .hero-overlay .names {
+  .hero-center {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10; text-align: center; pointer-events: none;
+  }
+  .hero-center .names {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.6rem, 10vw, 5rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 300; color: white;
     text-shadow: 0 2px 20px rgba(0,0,0,0.5);
     letter-spacing: 0.05em; line-height: 1.2;
   }
-  .hero-overlay .ampersand { font-style: italic; color: var(--gold); }
-  .hero-overlay .date {
+  .hero-center .ampersand { font-style: italic; color: var(--gold); font-size: 1.4em; }
+  .hero-center .date {
     display: block; font-family: 'Jost', sans-serif;
-    font-size: clamp(0.7rem, 3vw, 0.85rem);
-    letter-spacing: 0.28em; color: rgba(255,255,255,0.9);
-    margin-top: 16px; text-transform: uppercase;
+    font-size: 0.85rem; letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.85); margin-top: 12px; text-transform: uppercase;
   }
-  .hero-overlay .caption {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic; color: rgba(255,255,255,0.8);
-    font-size: clamp(0.95rem, 3.5vw, 1.15rem);
-    margin-top: 10px;
-  }
-
-  /* CIERRE */
-  .cierre-page {
-    min-height: 60vh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center; padding: 60px 24px;
-  }
-  .cierre-page .section-label { font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
-  .cierre-page .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 8vw, 3rem); font-weight: 300; line-height: 1.3; margin-bottom: 20px; }
-  .cierre-page .section-text { color: var(--muted); font-size: 0.92rem; line-height: 1.9; max-width: 340px; }
-  .cierre-icon { font-size: 3rem; margin-bottom: 20px; }
 
   /* UPLOAD */
-  .upload-section { max-width: 600px; margin: 56px auto 48px; padding: 0 20px; text-align: center; }
-  .section-label { font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: block; }
-  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.7rem, 7vw, 2.4rem); font-weight: 300; line-height: 1.3; margin-bottom: 14px; }
-  .section-text { color: var(--muted); font-size: 0.88rem; line-height: 1.9; margin-bottom: 28px; }
-
-  .upload-btn-area { display: flex; flex-direction: column; align-items: center; gap: 14px; }
-  .upload-label {
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-    width: 100%; max-width: 340px; padding: 18px 30px;
-    background: var(--dark); color: var(--cream);
-    font-family: 'Jost', sans-serif; font-size: 0.82rem;
-    letter-spacing: 0.22em; text-transform: uppercase;
-    border-radius: 3px; cursor: pointer;
-    transition: background 0.3s ease;
-    -webkit-tap-highlight-color: transparent;
+  .upload-section { max-width: 700px; margin: 80px auto 60px; padding: 0 24px; text-align: center; }
+  .section-label { font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 300; line-height: 1.3; margin-bottom: 20px; }
+  .section-text { color: var(--muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 40px; }
+  .drop-zone {
+    border: 1.5px dashed var(--gold); border-radius: 4px;
+    padding: 50px 30px; cursor: pointer;
+    transition: all 0.3s ease; background: white;
   }
-  .upload-label:active { background: var(--gold); }
-  .upload-label .cam-icon { font-size: 1.3rem; }
+  .drop-zone:hover, .drop-zone.drag-over { background: #fdf9f4; border-color: var(--dark); }
+  .drop-zone .icon { font-size: 2.5rem; margin-bottom: 14px; display: block; }
+  .drop-zone p { font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
+  .drop-zone strong { color: var(--gold); font-weight: 400; }
   #fileInput { display: none; }
-
-  /* Campo de mensaje */
-  .mensaje-wrap { width: 100%; max-width: 340px; }
-  .mensaje-wrap textarea {
-    width: 100%; padding: 12px 14px;
-    border: 1.5px solid #e0d8ce; border-radius: 3px;
-    font-family: 'Jost', sans-serif; font-size: 0.85rem;
-    color: var(--dark); background: white;
-    resize: none; outline: none;
-    transition: border-color 0.2s;
-    line-height: 1.6;
+  .btn {
+    display: inline-block; margin-top: 20px; padding: 14px 40px;
+    background: var(--dark); color: var(--cream);
+    font-family: 'Jost', sans-serif; font-size: 0.78rem;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    border: none; cursor: pointer; transition: all 0.3s ease;
   }
-  .mensaje-wrap textarea:focus { border-color: var(--gold); }
-  .mensaje-wrap textarea::placeholder { color: var(--muted); }
-  .mensaje-wrap label { display: block; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; text-align: left; }
+  .btn:hover { background: var(--gold); }
+  .btn:disabled { background: #ccc; cursor: not-allowed; }
+  .preview-strip { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+  .preview-strip img { width: 80px; height: 80px; object-fit: cover; border-radius: 3px; }
+  .progress-msg { margin-top: 16px; font-size: 0.85rem; color: var(--muted); min-height: 24px; }
 
-  .preview-strip { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
-  .preview-strip img { width: 72px; height: 72px; object-fit: cover; border-radius: 4px; }
-
-  .progress-wrap { width: 100%; max-width: 340px; margin: 0 auto; }
-  .progress-bar-bg { background: #e8e0d5; border-radius: 2px; height: 3px; overflow: hidden; display: none; margin-bottom: 8px; }
-  .progress-bar-fill { height: 100%; background: var(--gold); width: 0%; transition: width 0.4s ease; }
-  .progress-msg { font-size: 0.82rem; color: var(--muted); min-height: 20px; text-align: center; }
-
-  .btn-subir {
-    width: 100%; max-width: 340px; padding: 16px;
-    background: var(--gold); color: white;
-    font-family: 'Jost', sans-serif; font-size: 0.82rem;
-    letter-spacing: 0.22em; text-transform: uppercase;
-    border: none; border-radius: 3px; cursor: pointer;
-    transition: opacity 0.3s; display: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .btn-subir:active { opacity: 0.8; }
-  .btn-subir:disabled { background: #bbb; cursor: not-allowed; }
-
-  .divider { display: flex; align-items: center; gap: 16px; max-width: 340px; margin: 0 auto 44px; }
-  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.35; }
-  .divider span { color: var(--gold); font-size: 1rem; }
-
-  /* GALERÍA */
-  .gallery-section { max-width: 1000px; margin: 0 auto 80px; padding: 0 12px; }
+  /* GALLERY */
+  .gallery-section { max-width: 1100px; margin: 0 auto 100px; padding: 0 24px; }
   .gallery-section .section-label, .gallery-section .section-title { text-align: center; }
-  .gallery-section .section-title { font-size: clamp(1.3rem, 5vw, 1.9rem); margin-bottom: 24px; }
-
-  .collage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
-  .collage-item { aspect-ratio: 1; overflow: hidden; cursor: pointer; }
-  .collage-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
-  .collage-item:active img { transform: scale(1.05); }
-  .empty-gallery { text-align: center; color: var(--muted); font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; padding: 50px 0; grid-column: 1/-1; }
+  .gallery-section .section-title { font-size: clamp(1.5rem, 3vw, 2.2rem); margin-bottom: 40px; }
+  .masonry { columns: 3; column-gap: 16px; }
+  .masonry-item { break-inside: avoid; margin-bottom: 16px; overflow: hidden; border-radius: 3px; cursor: pointer; }
+  .masonry-item img { width: 100%; display: block; transition: transform 0.5s ease; filter: sepia(10%) brightness(0.97); }
+  .masonry-item:hover img { transform: scale(1.04); filter: none; }
+  .empty-gallery { text-align: center; color: var(--muted); font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; padding: 60px 0; }
+  .divider { display: flex; align-items: center; gap: 20px; max-width: 400px; margin: 0 auto 60px; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.4; }
+  .divider span { color: var(--gold); font-size: 1.2rem; }
 
   /* LIGHTBOX */
-  .lightbox {
-    display: none; position: fixed; inset: 0;
-    background: rgba(44,36,32,0.97); z-index: 1000;
-    flex-direction: column; align-items: center; justify-content: center;
-    padding: 20px;
-  }
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(44,36,32,0.95); z-index: 1000; align-items: center; justify-content: center; }
   .lightbox.open { display: flex; }
-  .lightbox img { max-width: 95vw; max-height: 70vh; object-fit: contain; border-radius: 2px; }
-  .lightbox-close {
-    position: absolute; top: 16px; right: 20px;
-    color: white; font-size: 2rem; cursor: pointer;
-    font-family: 'Cormorant Garamond', serif; padding: 8px;
+  .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+  .lightbox-close { position: absolute; top: 20px; right: 30px; color: white; font-size: 2rem; cursor: pointer; font-family: 'Cormorant Garamond', serif; }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-photo:first-child { display: none; }
+    .hero-photo { height: 100vh; }
+    .masonry { columns: 2; }
   }
-  .lightbox-msg {
-    margin-top: 20px; max-width: 340px; text-align: center;
-    color: rgba(255,255,255,0.85);
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic; font-size: 1.1rem;
-    line-height: 1.6; min-height: 28px;
-  }
+  @media (max-width: 480px) { .masonry { columns: 1; } }
 </style>
 </head>
 <body>
 
+<!-- ══ HERO ══ -->
 <section class="hero">
-  <!-- ✏️ REEMPLAZÁ esta URL con tu foto cuando la tengas -->
-  <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=85" alt="Nuestra boda">
-  <div class="hero-overlay">
+  <div class="hero-photo">
+    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt="Portada 1">
+    <div class="caption">El comienzo de nuestra historia</div>
+  </div>
+  <div class="hero-photo">
+    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=80" alt="Portada 2">
+    <div class="caption">Un día para recordar siempre</div>
+  </div>
+  <div class="hero-center">
     <div class="names">
       María <span class="ampersand">&</span> Santiago
-      <span class="date">11 · Septiembre · 2026 — Asunción, Paraguay</span>
+      <span class="date">14 · Junio · 2026 — Asunción, Paraguay</span>
     </div>
-    <p class="caption">Un día para recordar siempre</p>
   </div>
 </section>
 
-<div id="contenido"></div>
+<!-- ══ SUBIR FOTOS ══ -->
+<section class="upload-section">
+  <p class="section-label">Galería compartida</p>
+  <h2 class="section-title">Compartí tus momentos<br><em>del día más especial</em></h2>
+  <p class="section-text">
+    Subí tus fotos favoritas de la boda y formá parte<br>de este álbum que guardaremos para siempre.
+  </p>
+  <div class="drop-zone" id="dropZone">
+    <span class="icon">📷</span>
+    <p>Arrastrá tus fotos aquí o</p>
+    <p><strong>hacé click para seleccionar</strong></p>
+    <input type="file" id="fileInput" accept="image/*" multiple>
+  </div>
+  <div class="preview-strip" id="previewStrip"></div>
+  <div class="progress-msg" id="progressMsg"></div>
+  <button class="btn" id="uploadBtn" onclick="uploadAll()" disabled>Subir fotos</button>
+</section>
 
+<div class="divider"><span>✦</span></div>
+
+<!-- ══ GALERÍA ══ -->
+<section class="gallery-section">
+  <p class="section-label">Momentos capturados</p>
+  <h2 class="section-title">El álbum de todos</h2>
+  <div class="masonry" id="gallery">
+    <div class="empty-gallery">Cargando fotos...</div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <span class="lightbox-close" onclick="closeLightbox()">✕</span>
   <img id="lightboxImg" src="" alt="">
-  <p class="lightbox-msg" id="lightboxMsg"></p>
 </div>
 
 <script>
-  const IMGBB_KEY   = '9a76a37e8764fdd57b8413d248441fdb';
-  const JSONBIN_KEY = '$2a$10$LnaTutRD2/VQCqAl8cDqvu9JWx5dc1T8QufsoAp9WcVFdKBguok6.';
-  const BIN_ID      = '6a1f27a0da38895dfe7d44df';
-  const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-  const CIERRE      = new Date('2026-09-12T03:00:00');
-  const abierto     = new Date() <= CIERRE;
-
-  if (!abierto) {
-    document.getElementById('contenido').innerHTML = `
-      <div class="cierre-page">
-        <span class="cierre-icon">🌙</span>
-        <span class="section-label">Galería cerrada</span>
-        <h2 class="section-title">¡Gracias por<br><em>acompañarnos!</em></h2>
-        <p class="section-text">La galería ya no está disponible.<br>Fue un honor compartir este día con vos.</p>
-      </div>
-    `;
-  } else {
-    document.getElementById('contenido').innerHTML = `
-      <section class="upload-section">
-        <span class="section-label">Galería compartida</span>
-        <h2 class="section-title">Compartí tus<br><em>momentos</em></h2>
-        <p class="section-text">Subí tus fotos y dejá un mensaje para los novios.</p>
-        <div class="upload-btn-area">
-          <input type="file" id="fileInput" accept="image/*" multiple>
-          <label class="upload-label" for="fileInput">
-            <span class="cam-icon">📷</span>
-            Seleccionar fotos
-          </label>
-          <div class="preview-strip" id="previewStrip"></div>
-          <div class="mensaje-wrap" id="mensajeWrap" style="display:none;">
-            <label for="mensajeInput">Tu mensaje (opcional)</label>
-            <textarea id="mensajeInput" rows="3" placeholder="Ej: ¡Felicitaciones! Fue una noche increíble 🎉" maxlength="200"></textarea>
-          </div>
-          <div class="progress-wrap">
-            <div class="progress-bar-bg" id="progressBg">
-              <div class="progress-bar-fill" id="progressFill"></div>
-            </div>
-            <div class="progress-msg" id="progressMsg"></div>
-          </div>
-          <button class="btn-subir" id="uploadBtn" onclick="uploadAll()">Subir fotos ✦</button>
-        </div>
-      </section>
-      <div class="divider"><span>✦</span></div>
-      <section class="gallery-section">
-        <span class="section-label">Momentos capturados</span>
-        <h2 class="section-title">El álbum de todos</h2>
-        <div class="collage" id="gallery">
-          <div class="empty-gallery">Cargando fotos...</div>
-        </div>
-      </section>
-    `;
-
-    document.getElementById('fileInput').addEventListener('change', e => handleFiles(e.target.files));
-    cargarGaleria();
-  }
+  // ⚠️ REEMPLAZÁ con la URL de tu deployment de Apps Script
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzDztTJCn6wCWiSODtlaZ5u1G1l5so4Jt91_wK-KgV7UdjKIkRPuYjYaSeQNDLQzm9g/exec';
 
   let selectedFiles = [];
+
+  // ── Drop zone ──
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  dropZone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', e => handleFiles(e.target.files));
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('drag-over');
+    handleFiles(e.dataTransfer.files);
+  });
 
   function handleFiles(files) {
     selectedFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
@@ -235,136 +181,89 @@
       img.src = URL.createObjectURL(f);
       strip.appendChild(img);
     });
-    const btn = document.getElementById('uploadBtn');
-    const msgWrap = document.getElementById('mensajeWrap');
-    btn.style.display = selectedFiles.length ? 'block' : 'none';
-    msgWrap.style.display = selectedFiles.length ? 'block' : 'none';
-    btn.disabled = selectedFiles.length === 0;
+    document.getElementById('uploadBtn').disabled = selectedFiles.length === 0;
     document.getElementById('progressMsg').textContent =
       selectedFiles.length ? `${selectedFiles.length} foto(s) seleccionada(s)` : '';
   }
 
-  function comprimirImagen(file) {
-    return new Promise(resolve => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        let w = img.width, h = img.height;
-        const MAX = 1200;
-        if (w > MAX || h > MAX) {
-          if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
-          else { w = Math.round(w * MAX / h); h = MAX; }
-        }
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        canvas.toBlob(blob => resolve(blob), 'image/jpeg', 0.78);
-      };
-      img.src = URL.createObjectURL(file);
-    });
-  }
-
+  // ── Subir todas ──
   async function uploadAll() {
     if (!selectedFiles.length) return;
     const btn = document.getElementById('uploadBtn');
     const msg = document.getElementById('progressMsg');
-    const fill = document.getElementById('progressFill');
-    const bg = document.getElementById('progressBg');
-    const mensaje = document.getElementById('mensajeInput').value.trim();
-
     btn.disabled = true;
-    bg.style.display = 'block';
     const total = selectedFiles.length;
-    const nuevas = [];
 
     for (let i = 0; i < total; i++) {
-      msg.textContent = `Subiendo foto ${i + 1} de ${total}...`;
-      fill.style.width = ((i / total) * 100) + '%';
-      try {
-        const url = await subirAImgBB(selectedFiles[i]);
-        if (url) nuevas.push({ url, mensaje, fecha: new Date().toISOString() });
-      } catch(e) { console.error(e); }
+      msg.textContent = `Subiendo ${i + 1} de ${total}...`;
+      await uploadOne(selectedFiles[i]);
     }
 
-    fill.style.width = '100%';
-    if (nuevas.length) {
-      msg.textContent = 'Guardando en la galería...';
-      await agregarFotosAlBin(nuevas);
-    }
-
-    msg.textContent = `✓ ${nuevas.length} foto(s) subida(s)!`;
+    msg.textContent = '✓ ¡Fotos subidas con éxito!';
     document.getElementById('previewStrip').innerHTML = '';
-    document.getElementById('mensajeInput').value = '';
-    document.getElementById('mensajeWrap').style.display = 'none';
     selectedFiles = [];
-    btn.style.display = 'none';
-
-    setTimeout(async () => {
-      bg.style.display = 'none';
-      fill.style.width = '0%';
-      msg.textContent = '';
-      await cargarGaleria();
-    }, 2000);
+    setTimeout(loadGallery, 1500);
   }
 
-  async function subirAImgBB(file) {
-    const blob = await comprimirImagen(file);
-    const formData = new FormData();
-    formData.append('image', blob, file.name);
-    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
-      method: 'POST', body: formData
+  function uploadOne(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        const base64 = e.target.result.split(',')[1];
+        try {
+          const res = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+              nombre: file.name,
+              tipo: file.type,
+              datos: base64
+            })
+          });
+          const json = await res.json();
+          json.ok ? resolve(json) : reject(json.error);
+        } catch(err) { reject(err); }
+      };
+      reader.readAsDataURL(file);
     });
-    const json = await res.json();
-    if (json.success) return json.data.url;
-    throw new Error(json.error?.message || 'Error ImgBB');
   }
 
-  async function agregarFotosAlBin(nuevas) {
+  // ── Cargar galería ──
+  async function loadGallery() {
     try {
-      const res = await fetch(JSONBIN_URL, { headers: { 'X-Master-Key': JSONBIN_KEY } });
-      const data = await res.json();
-      const actuales = data.record?.fotos || [];
-      await fetch(JSONBIN_URL, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
-        body: JSON.stringify({ fotos: [...nuevas, ...actuales] })
-      });
-    } catch(e) { console.error('Error JSONBin:', e); }
-  }
+      const res = await fetch(SCRIPT_URL + '?action=list');
+      const json = await res.json();
+      const gallery = document.getElementById('gallery');
 
-  async function cargarGaleria() {
-    const gallery = document.getElementById('gallery');
-    if (!gallery) return;
-    try {
-      const res = await fetch(JSONBIN_URL, { headers: { 'X-Master-Key': JSONBIN_KEY } });
-      const data = await res.json();
-      const fotos = data.record?.fotos || [];
-      if (!fotos.length) {
-        gallery.innerHTML = '<div class="empty-gallery">Aún no hay fotos.<br>¡Sé el primero en subir la tuya!</div>';
+      if (!json.ok || !json.fotos.length) {
+        gallery.innerHTML = '<div class="empty-gallery">Aún no hay fotos. ¡Sé el primero en subir la tuya!</div>';
         return;
       }
-      gallery.innerHTML = fotos.map(f => `
-        <div class="collage-item" onclick="openLightbox('${f.url}', '${(f.mensaje || '').replace(/'/g, "\\'")}')">
-          <img src="${f.url}" alt="Foto boda" loading="lazy" onerror="this.parentElement.style.display='none'">
+
+      gallery.innerHTML = json.fotos.map(f => `
+        <div class="masonry-item" onclick="openLightbox('${f.url}')">
+          <img src="${f.url}" alt="${f.nombre}" loading="lazy">
         </div>
       `).join('');
     } catch(e) {
-      gallery.innerHTML = '<div class="empty-gallery">Error al cargar. Recargá la página.</div>';
+      document.getElementById('gallery').innerHTML = '<div class="empty-gallery">Error al cargar fotos.</div>';
     }
   }
 
-  function openLightbox(url, mensaje) {
+  // ── Lightbox ──
+  function openLightbox(url) {
     document.getElementById('lightboxImg').src = url;
-    document.getElementById('lightboxMsg').textContent = mensaje || '';
     document.getElementById('lightbox').classList.add('open');
   }
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('open');
     document.getElementById('lightboxImg').src = '';
-    document.getElementById('lightboxMsg').textContent = '';
   }
   document.getElementById('lightbox').addEventListener('click', function(e) {
     if (e.target === this) closeLightbox();
   });
+
+  // Cargar al iniciar
+  loadGallery();
 </script>
 </body>
 </html>
